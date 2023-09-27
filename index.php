@@ -1,6 +1,6 @@
 <?php
 
-use Quiz\Quiz;
+use Quiz\{Category, Quiz};
 use User\User;
 
 require_once 'config/config.php';
@@ -27,11 +27,11 @@ else if($requestURI == "" && $requestedMethod == 'GET') {
 }
 
 else if($requestURI == "/quiz/new" && $requestedMethod == 'GET'){
-    $categories = Quiz::getCategories();
+    $categories = Category::all();
     include 'views/quiz/newquiz.php';
 }
 else if($requestURI == "/quiz/new" && $requestedMethod == 'POST') {
-    Quiz::save($_POST);
+    Quiz::saveQuiz($_POST);
 }
 
 else if($requestURI == "/register" && $requestedMethod == 'GET'){
@@ -39,4 +39,17 @@ else if($requestURI == "/register" && $requestedMethod == 'GET'){
 }
 else if($requestURI == "/register" && $requestedMethod == 'POST'){
     User::register($_POST);
+}
+
+else if ($requestURI == "/quiz/question/new" && $requestedMethod == 'GET'){
+    include 'views/Quiz/newquestion.php';
+}
+
+//API ROUTEN
+else if($requestURI == "/api/quiz" && $requestedMethod == 'GET'){
+    Quiz::api();
+}
+
+else if($requestURI == '/api/categories' && $requestedMethod == 'GET'){
+    Category::api();
 }

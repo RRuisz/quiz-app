@@ -12,6 +12,11 @@ class User
     public string $email;
     public int $role_id;
 
+    /**
+     * handels the validation and registration for a new user
+     * @param array $data
+     * @return void
+     */
     public static function register(array $data)
     {
         $validation = true;
@@ -50,6 +55,7 @@ class User
             $query = 'INSERT INTO `users`(`username`, `email`, `password`) VALUES (?, ?, ?)';
             $stmt = $pdo->prepare($query);
             $result = $stmt->execute([$data['username'], $data['email'], $pwd]);
+//            TODO: Rückgabe ??
         } else {
             session_start();
             $_SESSION['error'] = $error;
